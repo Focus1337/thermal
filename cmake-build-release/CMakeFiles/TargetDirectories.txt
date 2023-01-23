@@ -1,0 +1,3 @@
+C:/Users/Focus/Desktop/thermal/cmake-build-release/CMakeFiles/thermal.dir
+C:/Users/Focus/Desktop/thermal/cmake-build-release/CMakeFiles/edit_cache.dir
+C:/Users/Focus/Desktop/thermal/cmake-build-release/CMakeFiles/rebuild_cache.dir
