@@ -11,14 +11,14 @@ double avg(double left, double right) {
     return (left + right) / 2;
 }
 
-void solveThomas(const double *F,
-                 const double *lambda,
-                 const int length,
-                 const double min,
-                 const double max,
-                 const double step,
-                 const double timeStep,
-                 double *y) {
+void solveTridiagMatrix(const double *F,
+                        const double *lambda,
+                        const int length,
+                        const double min,
+                        const double max,
+                        const double step,
+                        const double timeStep,
+                        double *y) {
     const auto coefficient = 1.0 / (2 * step * step);
 
     double A[length], B[length], C[length];
@@ -152,7 +152,7 @@ int main(int argc, char **argv) {
                         fReceive, size, MPI_DOUBLE,
                         0, MPI_COMM_WORLD);
 
-            solveThomas(fReceive, myLambdaX, size, TxLeft, TxRight, xStep, timeStep, temperatureReceive);
+            solveTridiagMatrix(fReceive, myLambdaX, size, TxLeft, TxRight, xStep, timeStep, temperatureReceive);
             restoreF(temperatureReceive, myLambdaX, size, xStep, timeStep, fReceive);
 
             MPI_Gather(temperatureReceive, size, MPI_DOUBLE,
@@ -171,7 +171,7 @@ int main(int argc, char **argv) {
                         fReceive, size, MPI_DOUBLE,
                         0, MPI_COMM_WORLD);
 
-            solveThomas(fReceive, myLambdaX, size, TxLeft, TxRight, xStep, timeStep, temperatureReceive);
+            solveTridiagMatrix(fReceive, myLambdaX, size, TxLeft, TxRight, xStep, timeStep, temperatureReceive);
             restoreF(temperatureReceive, myLambdaX, size, xStep, timeStep, fReceive);
 
             // Аналогично принимаем только 1 элемент
@@ -197,7 +197,7 @@ int main(int argc, char **argv) {
                         0, MPI_COMM_WORLD);
 
             // Само вычисление
-            solveThomas(fReceive, myLambdaX, size, TxLeft, TxRight, xStep, timeStep, temperatureReceive);
+            solveTridiagMatrix(fReceive, myLambdaX, size, TxLeft, TxRight, xStep, timeStep, temperatureReceive);
             restoreF(temperatureReceive, myLambdaX, size, xStep, timeStep, fReceive);
 
             // Возвращаю полученные данные
@@ -218,7 +218,7 @@ int main(int argc, char **argv) {
                         0, MPI_COMM_WORLD);
 
             // Само вычисление
-            solveThomas(fReceive, myLambdaY, size, TxLeft, TxRight, xStep, timeStep, temperatureReceive);
+            solveTridiagMatrix(fReceive, myLambdaY, size, TxLeft, TxRight, xStep, timeStep, temperatureReceive);
             restoreF(temperatureReceive, myLambdaY, size, xStep, timeStep, fReceive);
 
             // Возвращаю полученные значения
